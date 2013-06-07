@@ -6,7 +6,7 @@ class Contact
  		@firstname
  	end
 
- 	def initialize()
+ 	def initialize(i,firstname, lastname, email, notes)
 		@i = i
 		@firstname = firstname
 		@lastname = lastname
@@ -19,13 +19,13 @@ class Contact
 
 	
 	
-	def add_input(firstname, lastname, email, notes)
-		@firstname = firstname
-		@lastname = lastname
-		@email = email
-		@notes = notes
-		@i = i
-	end
+	#def add_input(firstname, lastname, email, notes)
+	#	@firstname = firstname
+	#	@lastname = lastname
+	#	@email = email
+	#	@notes = notes
+	#	@i = i
+	#end
 
 	def values
 		id = gets.chomp

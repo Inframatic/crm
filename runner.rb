@@ -5,7 +5,7 @@ class Runner
 
 	def self.run
 		db = Database.new
-	
+		i = 1000
 	# takes user to menu where they are prompted to type command from
 	#options
 		
@@ -16,7 +16,7 @@ class Runner
 			puts "To display all existing contacts, type 'display all contacts'"
 			puts "To display a particular contact, enter 'display a contact'"
 			puts "To display a particular user's attribute, 'sort by attribute'"
-			puts "To delete a contact type in user's email address and then 'delete'"
+			puts "To delete a contact type in 'delete'"
 			puts "To exit, type 'exit'"
 
 			menu_command = gets.chomp.downcase  
@@ -45,11 +45,10 @@ class Runner
 				puts "\e[H\e[2J"
 				
 				
-				new_contact = Contact.new
-				new_contact.add_input(firstname, lastname, email, notes)
+	
 				# we want to store this new_contact into the database
-				db.add(new_contact)
-
+				db.add(i,firstname, lastname, email, notes)
+				i += 1
 	
 				
 			elsif menu_command == 'modify contact'
@@ -60,6 +59,9 @@ class Runner
 				db.display_all_contacts
 
 			elsif menu_command == 'display a contact'
+				puts "Please enter first name or email of contact you wish to display"
+				name = gets.chomp.downcase
+				db.display_particular_contact(name)
 
 			elsif menu_command == 'sort by attribute'
 				puts "Which attribute would you like displayed?"
@@ -67,8 +69,10 @@ class Runner
 				attribute = gets.chomp.downcase
 				db.display_info_by_attribute(attribute)
 
-			elsif menu_command == '#{email} delete'
-		
+			elsif menu_command == 'delete'
+				puts "Which contact would you like to delete?"
+				delete = gets.chomp.downcase
+				db.delete_contact(delete)
 			else
 				puts "Invalid command. Please enter a command from the menu."
 			end
