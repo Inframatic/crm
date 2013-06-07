@@ -5,20 +5,18 @@ class Runner
 
 	def self.run
 		db = Database.new
+		db.add("998", "Hannes", "Tscherrig", "tschannes@gmx.ch", "nothing to add" )
+		db.add("997", "Petra", "Hermann", "petra@tscherrig.net", "sister")
 		i = 1000
-	# takes user to menu where they are prompted to type command from
-	#options
-		
+	
 		while true		
-
 			puts "To enter contact, type 'add'"
-			puts "To modify and existing contact, type 'modify contact'"
-			puts "To display all existing contacts, type 'display all contacts'"
-			puts "To display a particular contact, enter 'display a contact'"
-			puts "To display a particular user's attribute, 'sort by attribute'"
-			puts "To delete a contact type in 'delete'"
+			puts "To modify and existing contact, type 'mod'"
+			puts "To display all existing contacts, type 'all'"
+			puts "To display a particular contact, enter 'one'"
+			puts "To display a particular user's attribute, 'sort'"
+			puts "To delete a contact type in 'del'"
 			puts "To exit, type 'exit'"
-
 			menu_command = gets.chomp.downcase  
 			puts menu_command #\b
 			puts "\e[H\e[2J"
@@ -26,8 +24,6 @@ class Runner
 			if menu_command=='exit'
 				break
 			elsif menu_command == 'add'
-			
-
 				puts "Please enter you first name"
 			   	firstname = gets.chomp.downcase
 			   	puts "\e[H\e[2J"
@@ -40,48 +36,40 @@ class Runner
 				email = gets.chomp.downcase
 				puts "\e[H\e[2J"
 				
-				puts "Please enter any additional informatioin"
+				puts "Please enter any additional information"
 				notes = gets.chomp.downcase
 				puts "\e[H\e[2J"
-				
-				
-	
-				# we want to store this new_contact into the database
 				db.add(i,firstname, lastname, email, notes)
 				i += 1
-	
-				
-			elsif menu_command == 'modify contact'
-				puts "Which contact would you like to modify?"
-				modify_contact = gets.chomp.downcase
-			elsif menu_command == 'display all contacts'
-
+			elsif menu_command == 'mod'
+				puts "Which contact would you like to modify? Type a firstname!"
+				contact = gets.chomp.downcase
+				puts "Which piece of info would you like to modify? Choose between firstname(1), name(2), email(3), and remarks(4)!"
+				type = gets.chomp.to_i
+				puts "What is the new value?"
+				new_value = gets.chomp
+				db.modify_contact(contact, type, new_value)
+			elsif menu_command == 'all'
+				puts "Show all contacts? Enter 'all'!"
+				all = gets.chomp.downcase
 				db.display_all_contacts
-
-			elsif menu_command == 'display a contact'
+			elsif menu_command == 'one'
 				puts "Please enter first name or email of contact you wish to display"
 				name = gets.chomp.downcase
-				db.display_particular_contact(name)
-
-			elsif menu_command == 'sort by attribute'
+				db.find_contact(name)
+			elsif menu_command == 'sort'
 				puts "Which attribute would you like displayed?"
 				puts "Options: firstname, lastname, email, notes"
 				attribute = gets.chomp.downcase
 				db.display_info_by_attribute(attribute)
-
-			elsif menu_command == 'delete'
+			elsif menu_command == 'del'
 				puts "Which contact would you like to delete?"
 				delete = gets.chomp.downcase
 				db.delete_contact(delete)
 			else
 				puts "Invalid command. Please enter a command from the menu."
 			end
-
 		end
-		
-
-		
 	end
-	
 end
 Runner.run
